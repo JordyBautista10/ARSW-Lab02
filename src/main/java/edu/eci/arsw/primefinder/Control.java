@@ -57,13 +57,7 @@ public class Control extends Thread {
             }
         }
         System.out.println("----------------------------------------------------------------");
-        System.out.println(pft[0].getPrimes().size());
-        System.out.println(pft[1].getPrimes().size());
-        System.out.println(pft[2].getPrimes().size());
-        System.out.println("----------------------------------------------------------------");
-        System.out.println(pft[0].getPrimes().get(0));
-        System.out.println(pft[1].getPrimes().get(1));
-        System.out.println(pft[2].getPrimes().get(2));
+        System.out.println("Numero final de primos encontrados: " + pft[0].getPrimes().size());
     }
     
 }
