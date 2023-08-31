@@ -10,9 +10,5 @@
         <module name="Snake-race-thread" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="PrimeFinder" target="1.7" />
-      <module name="Snake-race-thread" target="11" />
-    </bytecodeTargetLevel>
   </component>
 </project>
