@@ -4,23 +4,19 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JFrame;
+import javax.swing.*;
 
 import enums.GridSize;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.event.ActionListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JButton;
-import javax.swing.JPanel;
 
 /**
  * @author jd-
  *
  */
 public class SnakeApp {
-
+    private JButton botonPausa;
+    private JButton botonReanudar;
     private static SnakeApp app;
     public static final int MAX_THREADS = 8;
     Snake[] snakes = new Snake[MAX_THREADS];
@@ -60,6 +56,7 @@ public class SnakeApp {
         actionsBPabel.add(new JButton("Action "));
         frame.add(actionsBPabel,BorderLayout.SOUTH);
         JButton iniciar = new JButton("Iniciar");
+
         iniciar.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 for (int i = 0; i != MAX_THREADS; i++) {
@@ -70,7 +67,48 @@ public class SnakeApp {
             }
         });
         JButton pausar = new JButton("Pausar");
+        pausar.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent e) {
+                int maxTamano = 0;
+                int idMaxtamano = 0;
+                int idPrimeraMuerte = -1;
+                boolean primeraMuerteEncontrada = false;
+
+                for (int i = 0; i < snakes.length; i++) {
+                    int tamanoActual = snakes[i].getSizeSerpiente();
+                    if (tamanoActual > maxTamano) {
+                        maxTamano = tamanoActual;
+                        idMaxtamano = snakes[i].getIdt();
+                    }
+
+                    if (snakes[i].isSnakeEnd() && !primeraMuerteEncontrada) {
+                        idPrimeraMuerte = snakes[i].getIdt();
+                        primeraMuerteEncontrada = true;
+                    }
+
+                    snakes[i].setJuegoCorriendo(false);
+                }
+
+                String mensaje = "La serpiente más larga tiene el ID: " + idMaxtamano +
+                        "\nLa primera serpiente que murió tiene el ID: " + idPrimeraMuerte;
+
+                JOptionPane.showMessageDialog(null, mensaje);
+
+
+        }
+        });
+
         JButton reaunudar = new JButton("Reaunudar");
+        reaunudar.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+
+                    for (int i =0; i < snakes.length ; i++) {
+                        snakes[i].resumen();
+                    }
+                }
+
+        });
+
         actionsBPabel.add(iniciar);
         actionsBPabel.add(pausar);
         actionsBPabel.add(reaunudar);

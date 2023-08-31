@@ -1,6 +1,5 @@
 package snakepackage;
 
-import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedDeque;
@@ -26,14 +25,21 @@ public class Snake extends Observable implements Runnable {
     private int jumps = 0;
     private boolean isSelected = false;
     private int growing = 0;
+    private boolean juegoCorriendo;
+
+    private int sizeSerpiente;
+
     public boolean goal = false;
 
     public Snake(int idt, Cell head, int direction) {
         this.idt = idt;
         this.direction = direction;
         generateSnake(head);
+        juegoCorriendo =false;
 
     }
+
+
 
     public boolean isSnakeEnd() {
         return snakeEnd;
@@ -48,8 +54,17 @@ public class Snake extends Observable implements Runnable {
 
     @Override
     public void run() {
+        juegoCorriendo = true;
         while (!snakeEnd) {
-            
+            synchronized (this) {
+                while (!juegoCorriendo) {
+                    try {
+                        wait();
+                    } catch (InterruptedException ex) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+            }
             snakeCalc();
 
             //NOTIFY CHANGES TO GUI
@@ -350,5 +365,30 @@ public class Snake extends Observable implements Runnable {
     public int getIdt() {
         return idt;
     }
+
+    private boolean visible = true;
+    public void setVisible(boolean newVisible) {
+        this.visible=newVisible;
+    }
+    private boolean isSleep = false;
+    public void setSnakeSleep(boolean newSnakeSleep) {
+        this.isSleep = newSnakeSleep;
+    }
+
+
+
+    public void setJuegoCorriendo(boolean status) {
+        juegoCorriendo =status;
+    }
+    public int getSizeSerpiente() {
+        return sizeSerpiente;
+    }
+    public synchronized void resumen() {
+        if(juegoCorriendo == false) {
+            juegoCorriendo = true;
+            notifyAll();
+        }
+    }
+
 
 }
