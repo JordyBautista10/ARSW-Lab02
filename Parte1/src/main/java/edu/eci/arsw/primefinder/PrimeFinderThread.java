@@ -33,7 +33,9 @@ public class PrimeFinderThread extends Thread {
                     System.out.println(i);
                     if (System.currentTimeMillis() - startTime >= duration) {
                         try {
-                            primes.wait();
+                            primes.wait(1);
+                            System.out.println("Numero de primos encontrados: " + getPrimes().size());
+                            System.out.println("Introduzca ENTER ");
                             Scanner scanner = new Scanner(System.in);
                             scanner.nextLine();
                             //scanner.close();
