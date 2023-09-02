@@ -1,0 +1,24 @@
+-Posibles condiciones de carrera.
+PROBLEMA: Al estar moviéndose en el tablero las serpientes , si llegan a chocar entre ellas al buscar un ratón,
+lo que podria conciderarse una región critica,  pueden seguir, y no se detienen en ese momento de la colisión.
+
+SOLUCIÓN: Crear un método que verifique esta colisión, usando los métodos ya dados en el código trabajado,
+los que verifican si están los bonus como ir más rápido o saltar a otra posición , también el caso si hay un
+ratón o barrera. Utilizando el mismo objeto como bloqueo.
+
+-Uso inadecuado de colecciones, considerando su manejo concurrente (para esto, aumente la velocidad del juego
+y ejecútelo varias veces hasta que se genere un error).Al ejecutarlo varias veces sale esta excepción
+
+PROBLEMA: Excepción “java.util.ConcurrentModificationException”, lanzada por la detección de una modificación
+concurrente no permitida en una colección. Esto se evidencia en el momento que la serpiente crece al moverse
+velozmente y después de esto toma otro camino o cae en un ratón.
+
+SOLUCIÓN: Mediante el uso de  ConcurrentLinkedDeque en la lista enlazada. Probamos en varias ocasiones para
+evidenciar que no saliera más está excepción, teniendo dos versiones del código una sin el uso de lo mencionado
+y otra con está, y después de varios juegos se confirmó que se arregló esta problemática.
+ConcurrentLinkedDeque → esta es una opción adecuada cuando varios subprocesos comparten el acceso a un grupo
+común. Como la mayoría de las otras implementaciones de colecciones concurrentes, esta clase no permite
+elementos nulos.
+
+-Uso innecesario de esperas activas.
+ Consideramos que no se presentan esperas innecesarias. 
